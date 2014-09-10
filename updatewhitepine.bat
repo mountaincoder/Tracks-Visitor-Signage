@@ -1,0 +1,1 @@
+XCOPY *.* \\whitepine\common\visitorsignage /s /y /u

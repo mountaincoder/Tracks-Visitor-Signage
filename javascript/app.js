@@ -502,7 +502,7 @@ function float2int (value) {
     return value | 0;
 }
 
-var LOOKUP_ISAPI_URI = '/tracks/tracksmobile.dll';
+var LOOKUP_ISAPI_URI = SERVER_HREF + '/tracks/tracksmobile.dll';
 var APP_UI_CONTAINER_ELEMENT_ID = 'appui';    
 var ENCLOSURE_TAXA_LISTING_DIV = 'listing';
 var TAXA_DETAIL_DISPLAY_DIV = 'detail';

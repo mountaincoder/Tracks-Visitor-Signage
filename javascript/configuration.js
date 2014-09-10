@@ -1,3 +1,4 @@
+var SERVER_HREF = 'http://192.168.100.225';
 var ANIMATION_TIME_MS = 30000;
 var ANIMATION_FADE_MS = 3500;
 var VISITOR_USER = 'demo';

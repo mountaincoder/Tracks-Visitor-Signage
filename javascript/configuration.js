@@ -1,0 +1,4 @@
+var ANIMATION_TIME_MS = 30000;
+var ANIMATION_FADE_MS = 3500;
+var VISITOR_USER = 'demo';
+var VISITOR_PASS = 'demo';

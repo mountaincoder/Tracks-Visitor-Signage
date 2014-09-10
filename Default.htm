@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Zoo Visitor Signage</title>
+<link rel='apple-touch-icon' href='images/logo.png'>
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.png">
+<link rel='stylesheet' type='text/css' href='css/main.css'>
+<script type="text/javascript" src="javascript/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="javascript/jquery.keyframes.min.js"></script>
+<script type="text/javascript" src="javascript/jquery-cookie-1.4.1-min.js"></script>
+<script type="text/javascript" src="javascript/underscore-1.6.0-min.js"></script>
+<script type="text/javascript" src="javascript/backbone-min.js"></script>
+<script type="text/javascript" src="javascript/jquery.json-2.4.min.js"></script>
+<script type="text/javascript" src="javascript/jstorage.min.js"></script>
+<script type="text/javascript" src="javascript/app.js"></script>
+<script type="text/javascript" src="javascript/configuration.js"></script>
+<script type="text/javascript" src="javascript/TaxaObject.js"></script>
+<script type="text/javascript" src="javascript/TaxaMetaStack.js"></script>
+<script type="text/javascript">
+/* this is the equivalent of Body.OnLoad(), but is related to
+   the DOM being loaded, but not waiting for all page resources
+*/
+$(document).ready(function() {
+    reset();
+});
+</script>
+<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<body>
+    <div id="body">
+        <div id="appui" class="appui">
+            <div id="SignageLookupMessageDiv"></div>
+            <label for="SignageID">Signage #</label>
+            <input type="text" id="SignageID"><br />
+            <button id="StartButton" disabled="true">Start</button>
+        </div>
+        <div id="appui_foot">  
+            <div class="institution">    
+                <div class="institution_name"></div>      
+                <div class="institution_image"><img alt="" src="images/logo.png" /></div>   
+            </div> 
+            <div class="taxa_container">    
+                <div class="taxa"></div>
+                <div class="taxa2"></div>
+            </div>
+        </div>
+    </div>                                  
+</body>
+</html>

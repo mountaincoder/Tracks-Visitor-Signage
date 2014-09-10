@@ -6,8 +6,12 @@ function prepNext(callback){
     var TaxaMetaObject, OneTaxaObject;
 
     if(!EnclosureTaxonomyMetaStack.hasMetaObjects()) {
-        EnclosureTaxonomyMetaStack = NextTaxonomyMetaStack;
-        getTaxaListForEnclosure($("#" + APP_UI_CONTAINER_ELEMENT_ID).data("EnclosureID"));
+        if(!NextTaxonomyMetaStack.hasMetaObjects())
+            reset(0);
+        else {
+            EnclosureTaxonomyMetaStack = NextTaxonomyMetaStack;
+            getTaxaListForEnclosure($("#" + APP_UI_CONTAINER_ELEMENT_ID).data("EnclosureID"));
+        }
     }
 
     TaxaMetaObject = EnclosureTaxonomyMetaStack.pop();
@@ -204,17 +208,27 @@ function getTracksAjax(URI, callback, isAsync) {
         type: REQUEST_TYPE_GET,
         async: isAsync,
         url: URI,
+        timeout: 20000,
         dataType: DATA_TYPE_JSON
     });
 
     request.success(callback);
 
-    request.error(function(XMLHttpRequest) {
+    request.error(function(XMLHttpRequest, TextStatus, ErrorThrown) {
         var JSONResponseArray, ErrorText;
         JSONResponseArray = $.parseJSON(XMLHttpRequest.responseText);
-
+        /* Timeout is being enforced at 20 seconds. In this application,
+           the only timeout vulnerability that is being addressed is
+           that the NextTaxonomyMetaStack could be empty, so the call
+           to build it from server data is made. Other vulnerabilities
+           to timeout may be discovered later. */
+        if(TextStatus === "timeout") {
+            if(NextTaxonomyMetaStack == null || !NextTaxonomyMetaStack.hasMetaObjects())
+                getTaxaListForEnclosure($("#" + APP_UI_CONTAINER_ELEMENT_ID).data("EnclosureID"));
+        }
         if(JSONResponseArray != null) {
             ErrorText = JSONResponseArray.error.response_code;
+            console.log(ErrorText);
     /* if execution goes to this block, and the call was made
        with the check call tag string, the check call ran into
        bad session and bombed. Reset session cookie and call reset() */

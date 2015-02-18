@@ -16,27 +16,29 @@ $.extend(TaxaMetaStack.prototype, {
         $.each(MetaObjArray, function(idx, OneMetaObj) {
             ThisHabitatNote = '';
             ThisSpeciesNote = '';
+                                    
+            if(OneMetaObj.Media != undefined){
+                $.each(OneMetaObj.Notes, function(idx, NoteObj) {
+                    if(NoteObj.Category == SPECIES_INFO_NOTE_TYPE)
+                        ThisSpeciesNote = NoteObj.Note;
+                    if(NoteObj.Category == HABITAT_INFO_NOTE_TYPE)
+                        ThisHabitatNote = NoteObj.Note;
+                });
+                                              
+                var MetaObject = {
+                    TaxonomyID: OneMetaObj.TaxID,
+                    TaxCommon: OneMetaObj.Common,
+                    TaxGSS: OneMetaObj.Scientific,
+                    MediaID: OneMetaObj.Media[0].MediaMasterID,
+                    HabitatNote: ThisHabitatNote,
+                    SpeciesNote: ThisSpeciesNote,
+                    Rank: OneMetaObj.Rank,
+                    Endangered: OneMetaObj.Endangered,
+                    Venomous: OneMetaObj.Venomous
+                };
 
-            $.each(OneMetaObj.Notes, function(idx, NoteObj) {
-                if(NoteObj.Category == SPECIES_INFO_NOTE_TYPE)
-                    ThisSpeciesNote = NoteObj.Note;
-                if(NoteObj.Category == HABITAT_INFO_NOTE_TYPE)
-                    ThisHabitatNote = NoteObj.Note;
-            });
-
-            var MetaObject = {
-                TaxonomyID: OneMetaObj.TaxID,
-                TaxCommon: OneMetaObj.Common,
-                TaxGSS: OneMetaObj.Scientific,
-                MediaID: OneMetaObj.Media[0].MediaMasterID,
-                HabitatNote: ThisHabitatNote,
-                SpeciesNote: ThisSpeciesNote,
-                Rank: OneMetaObj.Rank,
-                Endangered: OneMetaObj.Endangered,
-                Venomous: OneMetaObj.Venomous
-            };
-
-            TempObjArray.push(MetaObject);
+                TempObjArray.push(MetaObject);
+            }
         });
 
         this.ObjArray = TempObjArray.reverse();

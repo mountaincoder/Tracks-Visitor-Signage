@@ -161,6 +161,7 @@ function populateTaxaNotes(TaxaObject, NoteText, NoteType) {
 }
 /* Utility Functions: */
 function validateLogin(userName, password) {
+    console.log('validateLogin');
     var URI;
 
     URI = LOOKUP_ISAPI_URI + LOGIN_POSTFIX + QUESTION +
@@ -168,24 +169,26 @@ function validateLogin(userName, password) {
           "Password" + EQUALS + password;
 
     getTracksAjax(URI, function(JSONResponseArray) {
+        console.log('validateLogin Response');
+        console.log(JSONResponseArray);
         setLoggedIn(JSONResponseArray);
     }, false);
 }
 
 function setLoggedIn(LoginResponse) {
     var SessionID = LoginResponse.data.TracksSessionID;
-
-    $.cookie(SESSION_COOKIE_NAME, SessionID);
+                                                  
     $.jStorage.set(SESSION_COOKIE_NAME, SessionID);
 
     reset();
 }
 
 function checkLoginCookies() {
-    var SessionID;
-
-    SessionID = $.cookie(SESSION_COOKIE_NAME);
-
+    var SessionID;                   
+                                                   
+    SessionID = $.jStorage.get(SESSION_COOKIE_NAME, SessionID);
+    console.log('checkLoginCookies:' + SessionID);
+    
     if (SessionID == null || SessionID == NOT_LOGGED_IN) {
         $.jStorage.set(SESSION_COOKIE_NAME, NOT_LOGGED_IN);
 
@@ -201,6 +204,9 @@ function checkLoginCookies() {
 function getTracksAjax(URI, callback, isAsync) {
     var request;
 
+    //if cross origin
+    URI = URI +((URI.indexOf(QUESTION) >= 0) ? AMPER : QUESTION) + "no_cache" + EQUALS + new Date().getTime();
+    
     if(isAsync == undefined)
         isAsync = true;
 
@@ -232,8 +238,7 @@ function getTracksAjax(URI, callback, isAsync) {
     /* if execution goes to this block, and the call was made
        with the check call tag string, the check call ran into
        bad session and bombed. Reset session cookie and call reset() */
-            if(URI.indexOf(SESSION_CHECK_CALL_TAG) > 0) {
-                $.cookie(SESSION_COOKIE_NAME, NOT_LOGGED_IN);
+            if(URI.indexOf(SESSION_CHECK_CALL_TAG) > 0) {          
                 $.jStorage.set(SESSION_COOKIE_NAME, NOT_LOGGED_IN);
 
                 reset();
@@ -293,7 +298,8 @@ function getQueryStringAssocArray(HrefString) {
     return ReturnArray;
 }
 
-function reset(count) {
+function reset(count) {   
+    console.log('reset:' + count);   
     var LoginThingy, SessionFault, PreLoadEncID;
 
     EnclosureTaxonomyMetaStack = null;
@@ -307,7 +313,7 @@ function reset(count) {
         return;
     }
     
-    LoginThingy = checkLoginCookies();
+    LoginThingy = checkLoginCookies();    
 
     if(LoginThingy == NOT_LOGGED_IN)
         validateLogin(VISITOR_USER, VISITOR_PASS);
@@ -319,8 +325,7 @@ function reset(count) {
         catch(e) { // if it bombs we know that the session cookie is out of sync with the server
             console.log(e);
             SessionFault = true;
-
-            $.cookie(SESSION_COOKIE_NAME, NOT_LOGGED_IN);
+                                                              
             $.jStorage.set(SESSION_COOKIE_NAME, NOT_LOGGED_IN);
 
             reset(count - 1);
@@ -523,7 +528,7 @@ var TAXA_DETAIL_DISPLAY_DIV = 'detail';
 var INSTITUTION = "InstitutionName";
 var REQUEST_TYPE_GET = 'get';
 var REQUEST_TYPE_POST = 'post';
-var DATA_TYPE_JSON = 'json';
+var DATA_TYPE_JSON = 'json';  
 var SESSION_COOKIE_NAME = 'SignageSessID';
 var SESSION_ID_NAME = 'TracksSessionID';
 var NOT_LOGGED_IN = "not-logged-in";
@@ -536,10 +541,10 @@ var SLASH = "/";
 var COMMA = ",";
 var SESSION_CHECK_CALL_TAG = "t-t-7-ß-4$^00b"
 var EMPTY_RESULT_SET_INDICATOR = "NO_RECORDS";
-var LOOKUP_ENCLOSURE_POSTFIX = '/visitor-enclosure-lookup';
-var ENCLOSURE_TAXA_LIST_POSTFIX = '/visitor-enclosure';
-var ANIMAL_INFO_POSTFIX = '/visitor-animal';
-var TAXA_INFO_POSTFIX = '/visitor-taxa';
+var LOOKUP_ENCLOSURE_POSTFIX = '/guest-enclosure-lookup';
+var ENCLOSURE_TAXA_LIST_POSTFIX = '/guest-enclosure';
+var ANIMAL_INFO_POSTFIX = '/guest-animal';
+var TAXA_INFO_POSTFIX = '/guest-taxa';
 var SYSTEMSETTING_POSTFIX = '/systemsetting';
 var VISITOR_ENGAGEMENT_TAXA_MEDIA_TAG = 'visitor%20engagement';
 var MEDIA_POSTFIX = '/media';

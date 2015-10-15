@@ -8,13 +8,21 @@ function prepNext(callback){
     if(!EnclosureTaxonomyMetaStack.hasMetaObjects()) {
         if(!NextTaxonomyMetaStack.hasMetaObjects())
             reset(0);
-        else {
-            EnclosureTaxonomyMetaStack = NextTaxonomyMetaStack;
-            getTaxaListForEnclosure($("#" + APP_UI_CONTAINER_ELEMENT_ID).data("EnclosureID"));
+        else {   
+            /* david 03/04/2015 - for now we don't want to have new data show up while the sign is active */ 
+            EnclosureTaxonomyMetaStack.ObjArray = NextTaxonomyMetaStack.ObjArray.slice(0);
+                                                                                                
+            //EnclosureTaxonomyMetaStack = NextTaxonomyMetaStack;
+            //getTaxaListForEnclosure($("#" + APP_UI_CONTAINER_ELEMENT_ID).data("EnclosureID"));    
         }
-    }
+    }                                                                              
 
     TaxaMetaObject = EnclosureTaxonomyMetaStack.pop();
+    
+    ///* david 03/04/2015 - for now we don't want to have new data show up while the sign is active */            
+    //EnclosureTaxonomyMetaStack.ObjArray.reverse();              
+    //EnclosureTaxonomyMetaStack.ObjArray.push(TaxaMetaObject);              
+    //EnclosureTaxonomyMetaStack.ObjArray.reverse(); 
         
     OneTaxaObject = new TaxaObject();
                              

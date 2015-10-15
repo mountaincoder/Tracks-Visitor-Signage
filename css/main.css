@@ -1,11 +1,50 @@
+@media only screen and (max-width: 1024px){
+    body{
+        font-size: 14px;
+    }  
+    #appui .TaxonomyReferenceNotes .HabitatNote,
+    #appui .TaxonomyReferenceNotes .SpeciesCharacteristics{      
+        font-size: 28px;
+    }
+    #appui_foot .institution .institution_name{
+        font-size: 50px;
+    }  
+    #appui_foot .taxa_container .common{
+        font-size: 30px;    
+    }
+    #appui_foot .taxa_container .gss{
+        font-size: 25px;      
+    }
+}  
+@media only screen and (min-width: 1025px){
+    body{
+        font-size: 14px;
+    }  
+    #appui .TaxonomyReferenceNotes .HabitatNote,
+    #appui .TaxonomyReferenceNotes .SpeciesCharacteristics{      
+        font-size: 38px;
+    }
+    #appui_foot .institution .institution_name{
+        font-size: 80px;
+    }  
+    #appui_foot .taxa_container .common{
+        font-size: 45px;    
+    }
+    #appui_foot .taxa_container .gss{
+        font-size: 35px;      
+    }
+} 
+    
+
+
 html{
     overflow: auto;
 }
 html,
 body {
     margin:0;
-    padding:0;
-    font: normal 14px Cochin, Cochin LT, Verdona, Arial, Helvetica, sans-serif;
+    padding:0;                                                              
+    font-family: Cochin, Cochin LT, Verdona, Arial, Helvetica, sans-serif;  
     color: #000000;                
     height: 100%;
 }   
@@ -43,8 +82,7 @@ body {
 #appui .TaxonomyReferenceNotes .SpeciesCharacteristics{  
     position: absolute;    
     padding: 0 30px;
-    
-    font-size: 38px;
+                          
     color: #FFF; 
     
     letter-spacing: 4px;
@@ -119,8 +157,7 @@ body {
     padding-left: 25px;
     float: left;
 }
-#appui_foot .institution .institution_name{
-    font-size: 80px;
+#appui_foot .institution .institution_name{  
     padding-right: 25px;
     float: left;  
 }
@@ -129,13 +166,7 @@ body {
 }
 #appui_foot .institution .institution_image img{
     height: 100px;
-}    
-#appui_foot .taxa_container .common{
-    font-size: 45px;    
-}
-#appui_foot .taxa_container .gss{
-    font-size: 35px;      
-}
+}   
 #appui_foot .taxa,
 #appui_foot .taxa2{
     position: absolute;
